@@ -41,8 +41,23 @@ button:hover { background: #f0f0f0; }
   white-space: pre-wrap;
 }
 .plots { flex: 1; min-width: 0; }
-.plot { height: 200px; }
-.plot.raster { height: 240px; }
+.plot { height: 220px; }
+.plot.raster { height: 320px; }
+.readout {
+  display: flex; gap: 12px; margin-bottom: 12px;
+}
+.readout-block {
+  flex: 1; padding: 10px 14px; background: var(--panel); border-radius: 6px;
+  text-align: center;
+}
+.readout-block.big { flex: 1.4; background: #eef7ee; }
+.readout-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.readout-value {
+  font-size: 28px; font-weight: 600; line-height: 1.1; margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+.readout-value.primary { color: var(--accent); font-size: 36px; }
+.readout-unit { font-size: 11px; color: var(--muted); }
 footer { margin-top: 20px; color: #888; }
 @media (max-width: 800px) {
   .layout { flex-direction: column; }

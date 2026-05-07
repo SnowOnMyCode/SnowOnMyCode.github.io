@@ -21,16 +21,16 @@
 <div class="container">
   <h2>Memristive SNN — Online STDP learning of A + B</h2>
   <p class="subtitle">
-    Two Poisson inputs A, B drive a single LIF output through Biolek HP
-    memristor synapses. Pair-based STDP applies voltage pulses to the
-    memristors; teacher forcing drives the output at rate A + B so the
-    synapses shape toward summation. Simulation runs entirely in your
-    browser (no server).
+    Two input rate channels (A, B) drive a population of 64 LIF output neurons
+    through 128 Biolek HP memristor synapses. Pair-based STDP applies physical
+    voltage pulses to each memristor. Teacher forcing drives the output at rate
+    A + B during training; turn it off and disable learning to verify the
+    network reproduces the sum from learned synaptic weights alone.
   </p>
   <div class="layout">
     <aside class="controls">
-      <label>Input A rate (Hz): <span id="rate-a-val">5</span></label>
-      <input type="range" id="rate-a" min="0" max="40" step="1" value="5">
+      <label>Input A rate (Hz): <span id="rate-a-val">4</span></label>
+      <input type="range" id="rate-a" min="0" max="40" step="1" value="4">
 
       <label>Input B rate (Hz): <span id="rate-b-val">5</span></label>
       <input type="range" id="rate-b" min="0" max="40" step="1" value="5">
@@ -47,16 +47,31 @@
       <pre id="status" class="status"></pre>
     </aside>
     <section class="plots">
-      <div id="raster"  class="plot raster"></div>
-      <div id="vhist"   class="plot"></div>
-      <div id="ptrace"  class="plot"></div>
-      <div id="weights" class="plot"></div>
-      <div id="rates"   class="plot"></div>
+      <div class="readout">
+        <div class="readout-block">
+          <div class="readout-label">target (A + B)</div>
+          <div class="readout-value" id="big-target">9.0</div>
+          <div class="readout-unit">Hz</div>
+        </div>
+        <div class="readout-block big">
+          <div class="readout-label">output (mean of 64)</div>
+          <div class="readout-value primary" id="big-actual">0.00</div>
+          <div class="readout-unit">Hz</div>
+        </div>
+        <div class="readout-block">
+          <div class="readout-label">error</div>
+          <div class="readout-value" id="big-error">0.00</div>
+          <div class="readout-unit">Hz</div>
+        </div>
+      </div>
+      <div id="raster"   class="plot raster"></div>
+      <div id="ratehist" class="plot"></div>
+      <div id="weights"  class="plot"></div>
     </section>
   </div>
   <footer>
     <small>
-      Biolek HP memristor model (Z. & D. Biolek), Joglekar window.
+      Biolek HP memristor model (Z. &amp; D. Biolek), Joglekar window.
       LIF neurons with pair-based STDP. Source on GitHub.
     </small>
   </footer>
