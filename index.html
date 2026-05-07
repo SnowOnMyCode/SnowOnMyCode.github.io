@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Memristive SNN — STDP Arithmetic</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="locked">
+<div id="gate" class="gate">
+  <div class="gate-card">
+    <h3>Access required</h3>
+    <p>Enter the access code to view this demo.</p>
+    <input id="gate-input" type="password" autocomplete="off" autocapitalize="off"
+           spellcheck="false" placeholder="code">
+    <button id="gate-submit">Enter</button>
+    <div id="gate-error" class="gate-error"></div>
+  </div>
+</div>
+<div class="container">
+  <h2>Memristive SNN — Online STDP learning of A + B</h2>
+  <p class="subtitle">
+    Two Poisson inputs A, B drive a single LIF output through Biolek HP
+    memristor synapses. Pair-based STDP applies voltage pulses to the
+    memristors; teacher forcing drives the output at rate A + B so the
+    synapses shape toward summation. Simulation runs entirely in your
+    browser (no server).
+  </p>
+  <div class="layout">
+    <aside class="controls">
+      <label>Input A rate (Hz): <span id="rate-a-val">5</span></label>
+      <input type="range" id="rate-a" min="0" max="40" step="1" value="5">
+
+      <label>Input B rate (Hz): <span id="rate-b-val">5</span></label>
+      <input type="range" id="rate-b" min="0" max="40" step="1" value="5">
+
+      <label>Simulation speed: <span id="speed-val">1.0</span>x</label>
+      <input type="range" id="speed" min="0.2" max="10" step="0.2" value="1">
+
+      <div class="checks">
+        <label><input type="checkbox" id="learn" checked> Learning (STDP on)</label>
+        <label><input type="checkbox" id="teach" checked> Teacher forcing</label>
+      </div>
+
+      <button id="reset">Reset memristor state</button>
+      <pre id="status" class="status"></pre>
+    </aside>
+    <section class="plots">
+      <div id="raster"  class="plot raster"></div>
+      <div id="vhist"   class="plot"></div>
+      <div id="ptrace"  class="plot"></div>
+      <div id="weights" class="plot"></div>
+      <div id="rates"   class="plot"></div>
+    </section>
+  </div>
+  <footer>
+    <small>
+      Biolek HP memristor model (Z. & D. Biolek), Joglekar window.
+      LIF neurons with pair-based STDP. Source on GitHub.
+    </small>
+  </footer>
+</div>
+<script src="sim.js"></script>
+<script src="gate.js"></script>
+</body>
+</html>
