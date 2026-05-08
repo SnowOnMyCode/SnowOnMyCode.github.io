@@ -1,15 +1,22 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Memristive SNN — STDP Arithmetic</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Memristive SNN — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<link rel="stylesheet" href="style.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body class="locked">
 <div id="gate" class="gate">
   <div class="gate-card">
+    <div class="gate-mark">SNN</div>
     <h3>Access required</h3>
     <p>Enter the access code to view this demo.</p>
     <input id="gate-input" type="password" autocomplete="off" autocapitalize="off"
@@ -18,65 +25,24 @@
     <div id="gate-error" class="gate-error"></div>
   </div>
 </div>
-<div class="container">
-  <h2>Memristive SNN — Online STDP learning of A + B</h2>
-  <p class="subtitle">
-    Two input rate channels (A, B) drive a population of 64 LIF output neurons
-    through 128 Biolek HP memristor synapses. Pair-based STDP applies physical
-    voltage pulses to each memristor. Teacher forcing drives the output at rate
-    A + B during training; turn it off and disable learning to verify the
-    network reproduces the sum from learned synaptic weights alone.
-  </p>
-  <div class="layout">
-    <aside class="controls">
-      <label>Input A rate (Hz): <span id="rate-a-val">4</span></label>
-      <input type="range" id="rate-a" min="0" max="40" step="1" value="4">
 
-      <label>Input B rate (Hz): <span id="rate-b-val">5</span></label>
-      <input type="range" id="rate-b" min="0" max="40" step="1" value="5">
+<div id="root"></div>
 
-      <label>Simulation speed: <span id="speed-val">1.0</span>x</label>
-      <input type="range" id="speed" min="0.2" max="10" step="0.2" value="1">
+<!-- Sim core (plain JS) -->
+<script src="snn-sim.js"></script>
 
-      <div class="checks">
-        <label><input type="checkbox" id="learn" checked> Learning (STDP on)</label>
-        <label><input type="checkbox" id="teach" checked> Teacher forcing</label>
-      </div>
+<!-- Tweaks shell + helpers -->
+<script type="text/babel" src="tweaks-panel.jsx"></script>
 
-      <button id="reset">Reset memristor state</button>
-      <pre id="status" class="status"></pre>
-    </aside>
-    <section class="plots">
-      <div class="readout">
-        <div class="readout-block">
-          <div class="readout-label">target (A + B)</div>
-          <div class="readout-value" id="big-target">9.0</div>
-          <div class="readout-unit">Hz</div>
-        </div>
-        <div class="readout-block big">
-          <div class="readout-label">output (mean of 64)</div>
-          <div class="readout-value primary" id="big-actual">0.00</div>
-          <div class="readout-unit">Hz</div>
-        </div>
-        <div class="readout-block">
-          <div class="readout-label">error</div>
-          <div class="readout-value" id="big-error">0.00</div>
-          <div class="readout-unit">Hz</div>
-        </div>
-      </div>
-      <div id="raster"   class="plot raster"></div>
-      <div id="ratehist" class="plot"></div>
-      <div id="weights"  class="plot"></div>
-    </section>
-  </div>
-  <footer>
-    <small>
-      Biolek HP memristor model (Z. &amp; D. Biolek), Joglekar window.
-      LIF neurons with pair-based STDP. Source on GitHub.
-    </small>
-  </footer>
-</div>
-<script src="sim.js"></script>
+<!-- Themes (plain JS, exposes window.THEMES / getTheme) -->
+<script src="themes.js"></script>
+
+<!-- React components — load with Babel -->
+<script type="text/babel" src="network-viz.jsx"></script>
+<script type="text/babel" src="plots.jsx"></script>
+<script type="text/babel" src="app.jsx"></script>
+
+<!-- Passcode gate -->
 <script src="gate.js"></script>
 </body>
 </html>
